@@ -1,12 +1,13 @@
 import { cn } from '@/lib/utils';
 
-type Platform = 'tiktok' | 'shopee' | 'facebook' | 'lazada';
+type Platform = 'tiktok' | 'shopee' | 'facebook' | 'lazada' | 'line';
 
 const config: Record<Platform, { label: string; dot: string; text: string }> = {
   tiktok: { label: 'TikTok', dot: 'bg-[var(--tiktok)]', text: 'text-[var(--tiktok)]' },
   shopee: { label: 'Shopee', dot: 'bg-[var(--shopee)]', text: 'text-[var(--shopee)]' },
   facebook: { label: 'Facebook', dot: 'bg-[var(--facebook)]', text: 'text-[var(--facebook)]' },
   lazada: { label: 'Lazada', dot: 'bg-[var(--lazada)]', text: 'text-[var(--lazada)]' },
+  line: { label: 'Line', dot: 'bg-emerald-500', text: 'text-emerald-400' },
 };
 
 export interface PlatformBadgeProps {

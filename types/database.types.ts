@@ -444,6 +444,43 @@ export interface Database {
           created_at?: string
         }
       }
+      tags: {
+        Row: {
+          id: string
+          name: string
+          color: string
+          category: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          color?: string
+          category: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          color?: string
+          category?: string
+          created_at?: string
+        }
+      }
+      customer_tags: {
+        Row: {
+          customer_id: string
+          tag_id: string
+        }
+        Insert: {
+          customer_id: string
+          tag_id: string
+        }
+        Update: {
+          customer_id?: string
+          tag_id?: string
+        }
+      }
     }
     Enums: {
       user_role: UserRole
