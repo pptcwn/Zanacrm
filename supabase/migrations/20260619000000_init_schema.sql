@@ -168,12 +168,23 @@ create table public.finance_entries (
 -- Automatic Profile Handling trigger from auth.users
 create function public.handle_new_user()
 returns trigger as $$
+declare
+  v_role user_role;
 begin
+  begin
+    v_role := (new.raw_user_meta_data->>'role')::user_role;
+    if v_role is null then
+      v_role := 'sales'::user_role;
+    end if;
+  exception when others then
+    v_role := 'sales'::user_role;
+  end;
+
   insert into public.profiles (id, full_name, role, avatar_url)
   values (
     new.id,
     new.raw_user_meta_data->>'full_name',
-    coalesce((new.raw_user_meta_data->>'role')::user_role, 'sales'::user_role),
+    v_role,
     new.raw_user_meta_data->>'avatar_url'
   );
   return new;
