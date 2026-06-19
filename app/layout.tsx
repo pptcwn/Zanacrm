@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
-import { TopBar } from "@/components/top-bar";
-import { MobileBottomNav } from "@/components/mobile-bottom-nav";
+import { AppChrome } from "@/components/app-chrome";
+import { AuthProvider } from "@/components/providers/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,19 +44,9 @@ export default function RootLayout({
   return (
     <html lang="th" className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable} h-full antialiased bg-background`}>
       <body className="min-h-full bg-background text-foreground flex flex-col">
-        <div className="flex h-screen overflow-hidden">
-          {/* Sidebar */}
-          <Sidebar />
-
-          {/* Main Content */}
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <TopBar />
-            <main className="flex-1 overflow-y-auto px-4 py-6 pb-24 md:px-8 md:pb-8 bg-background">
-              <div className="mx-auto w-full max-w-[1400px]">{children}</div>
-            </main>
-            <MobileBottomNav />
-          </div>
-        </div>
+        <AuthProvider>
+          <AppChrome>{children}</AppChrome>
+        </AuthProvider>
       </body>
     </html>
   );

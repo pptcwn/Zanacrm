@@ -19,7 +19,14 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
         env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? 'test-anon-key',
     },
-    exclude: ['**/node_modules/**', '**/dist/**', '**/antigravity-auto-accept/**'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.agent/**',
+      '**/.agents/**',
+      '**/.npm-tmp/**',
+      '**/antigravity-auto-accept/**',
+    ],
   },
   resolve: {
     alias: {

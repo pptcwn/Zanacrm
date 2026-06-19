@@ -1,0 +1,767 @@
+
+<h2 class="sr-only">ZANA Full Prototype — 19 pages interactive mockup</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:13px}
+.shell{display:flex;height:780px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.sidebar{width:200px;background:#1B3A5C;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-brand{padding:14px 14px 10px;border-bottom:0.5px solid rgba(255,255,255,0.1)}
+.sb-brand-name{font-size:15px;font-weight:500;color:#fff;letter-spacing:.02em}
+.sb-brand-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px}
+.sb-section{padding:8px 10px 4px;font-size:10px;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:.08em;text-transform:uppercase}
+.sb-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;color:rgba(255,255,255,0.6);font-size:12px;border-left:2px solid transparent;transition:all .12s}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,0.06)}
+.sb-item.active{color:#fff;background:rgba(255,255,255,0.12);border-left-color:#0D9E75}
+.sb-item i{font-size:15px;flex-shrink:0}
+.sb-footer{margin-top:auto;padding:10px 14px;border-top:0.5px solid rgba(255,255,255,0.1)}
+.sb-user{display:flex;align-items:center;gap:8px}
+.sb-av{width:28px;height:28px;border-radius:50%;background:#0D6B6E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500}
+.sb-uname{font-size:12px;color:rgba(255,255,255,.8)}
+.sb-urole{font-size:10px;color:rgba(255,255,255,.4)}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0;background:var(--color-background-primary)}
+.page-title{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.tb-actions{display:flex;gap:6px;align-items:center}
+.btn-primary{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:#1B3A5C;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:12px;font-weight:500;cursor:pointer}
+.btn-secondary{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:transparent;color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;cursor:pointer}
+.btn-danger{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:transparent;color:#A32D2D;border:0.5px solid #F09595;border-radius:var(--border-radius-md);font-size:12px;cursor:pointer}
+.content{flex:1;overflow-y:auto;padding:14px 16px}
+.page{display:none}.page.active{display:block}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.kpi-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px}
+.kpi-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:5px}
+.kpi-val{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.kpi-sub{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.kpi-pos{color:#27500A}.kpi-neg{color:#A32D2D}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;margin-bottom:12px}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500}
+.b-green{background:#EAF3DE;color:#27500A}.b-red{background:#FCEBEB;color:#A32D2D}.b-amber{background:#FAEEDA;color:#633806}.b-blue{background:#E6F1FB;color:#0C447C}.b-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}.b-teal{background:#E1F5EE;color:#085041}.b-purple{background:#EEEDFE;color:#3C3489}
+.tbl{width:100%;border-collapse:collapse;table-layout:fixed}
+.tbl th{background:var(--color-background-secondary);padding:8px 10px;text-align:left;font-size:11px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.tbl td{padding:8px 10px;font-size:12px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle}
+.tbl tr:hover td{background:var(--color-background-secondary)}
+.tbl tr:last-child td{border-bottom:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-label{font-size:11px;font-weight:500;color:var(--color-text-secondary)}
+.form-input{padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.form-select{padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.search-bar{display:flex;gap:8px;margin-bottom:10px}
+.search-input{flex:1;padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.search-select{padding:6px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.av-t{background:#E1F5EE;color:#085041}.av-j{background:#E6F1FB;color:#0C447C}.av-o{background:#FBEAF0;color:#72243E}.av-g{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.crm-col{display:flex;flex-direction:column;gap:6px}
+.crm-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px;cursor:pointer}
+.crm-card:hover{border-color:var(--color-border-secondary)}
+.crm-card-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.crm-card-meta{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.crm-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.crm-col-hdr{font-size:11px;font-weight:500;padding:6px 8px;border-radius:var(--border-radius-md);margin-bottom:6px;text-align:center}
+.pbar-wrap{width:100%;height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.pbar{height:100%;border-radius:3px}
+.login-wrap{display:flex;align-items:center;justify-content:center;height:100%;background:var(--color-background-secondary)}
+.login-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:32px 28px;width:320px}
+.login-logo{text-align:center;margin-bottom:24px}
+.login-logo-icon{display:inline-flex;width:52px;height:52px;background:#1B3A5C;border-radius:var(--border-radius-lg);align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:500;margin-bottom:8px}
+.login-title{font-size:18px;font-weight:500;color:var(--color-text-primary);text-align:center}
+.login-sub{font-size:12px;color:var(--color-text-secondary);text-align:center;margin-top:4px}
+.upload-zone{border:1.5px dashed var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:32px;text-align:center;cursor:pointer;background:var(--color-background-secondary)}
+.upload-zone:hover{border-color:#1B3A5C;background:var(--color-background-primary)}
+.upload-icon{font-size:28px;color:var(--color-text-secondary);margin-bottom:8px}
+.call-item{display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-bottom:6px}
+.call-item.urgent{background:#FCEBEB;border-left:3px solid #E24B4A;padding-left:8px}
+.call-item.today{background:#FAEEDA;border-left:3px solid #EF9F27;padding-left:8px}
+.kpi-pass{display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 6px;border-radius:4px;font-weight:500}
+.kpi-p{background:#EAF3DE;color:#27500A}.kpi-f{background:#FCEBEB;color:#A32D2D}
+.stock-bar-wrap{display:flex;align-items:center;gap:6px}
+.pnl-section{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;margin-bottom:8px}
+.pnl-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pnl-row:last-child{border:none}
+.pnl-total{font-weight:500;font-size:13px;border-top:1px solid var(--color-border-secondary)!important;padding-top:6px!important;margin-top:2px}
+.tab-bar{display:flex;gap:2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:12px}
+.tab-item{padding:7px 14px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab-item.active{color:#1B3A5C;border-bottom-color:#1B3A5C;font-weight:500}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.dot-green{background:#639922}.dot-red{background:#E24B4A}.dot-amber{background:#EF9F27}.dot-gray{background:#888780}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.setting-row:last-child{border:none}
+.setting-label{font-size:13px;color:var(--color-text-primary)}
+.setting-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.toggle{width:36px;height:20px;background:#639922;border-radius:10px;position:relative;cursor:pointer;flex-shrink:0}
+.toggle.off{background:var(--color-border-secondary)}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .15s}
+.toggle.on::after{left:19px}
+.mini-chart{display:flex;align-items:flex-end;gap:3px;height:40px;margin-top:6px}
+.mini-bar{flex:1;background:#1B3A5C;border-radius:2px 2px 0 0;min-height:3px}
+.mini-bar.teal{background:#0D6B6E}
+</style>
+
+<div class="shell">
+<div class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-name">ZANA System</div>
+    <div class="sb-brand-sub">Sales Operation v2</div>
+  </div>
+  <div class="sb-section">ภาพรวม</div>
+  <div class="sb-item" onclick="nav('login')"><i class="ti ti-login"></i> Login</div>
+  <div class="sb-item active" onclick="nav('ceo')"><i class="ti ti-layout-dashboard"></i> CEO Dashboard</div>
+  <div class="sb-item" onclick="nav('admin')"><i class="ti ti-user-circle"></i> Admin Dashboard</div>
+  <div class="sb-section">ลูกค้า & CRM</div>
+  <div class="sb-item" onclick="nav('import')"><i class="ti ti-user-plus"></i> นำเข้าลูกค้า</div>
+  <div class="sb-item" onclick="nav('excel')"><i class="ti ti-file-spreadsheet"></i> Import Excel</div>
+  <div class="sb-item" onclick="nav('crm')"><i class="ti ti-layout-kanban"></i> CRM Pipeline</div>
+  <div class="sb-item" onclick="nav('queue')"><i class="ti ti-phone-call"></i> Call Queue</div>
+  <div class="sb-item" onclick="nav('customer')"><i class="ti ti-user"></i> ข้อมูลลูกค้า</div>
+  <div class="sb-item" onclick="nav('calllog')"><i class="ti ti-phone"></i> Call Log</div>
+  <div class="sb-section">ออเดอร์ & สต๊อก</div>
+  <div class="sb-item" onclick="nav('orders')"><i class="ti ti-shopping-bag"></i> ออเดอร์</div>
+  <div class="sb-item" onclick="nav('stock')"><i class="ti ti-box"></i> สต๊อก</div>
+  <div class="sb-item" onclick="nav('products')"><i class="ti ti-package"></i> สินค้า</div>
+  <div class="sb-section">รายงาน</div>
+  <div class="sb-item" onclick="nav('ads')"><i class="ti ti-speakerphone"></i> Ads Performance</div>
+  <div class="sb-item" onclick="nav('telesales')"><i class="ti ti-headset"></i> Telesales Daily</div>
+  <div class="sb-item" onclick="nav('eval')"><i class="ti ti-clipboard-check"></i> Daily Evaluation</div>
+  <div class="sb-item" onclick="nav('cost')"><i class="ti ti-coin"></i> ต้นทุน</div>
+  <div class="sb-item" onclick="nav('pnl')"><i class="ti ti-chart-bar"></i> P&L Dashboard</div>
+  <div class="sb-section">ระบบ</div>
+  <div class="sb-item" onclick="nav('settings')"><i class="ti ti-settings"></i> Settings</div>
+  <div class="sb-item" onclick="nav('users')"><i class="ti ti-users"></i> จัดการผู้ใช้</div>
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-av">CEO</div>
+      <div><div class="sb-uname">คุณซาน่า</div><div class="sb-urole">CEO / Owner</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="page-title" id="page-title">CEO Dashboard</div>
+    <div class="tb-actions" id="tb-actions">
+      <button class="btn-secondary"><i class="ti ti-download" style="font-size:14px" aria-hidden="true"></i> Export</button>
+      <button class="btn-secondary"><i class="ti ti-refresh" style="font-size:14px" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="content">
+
+  <!-- LOGIN -->
+  <div class="page" id="page-login">
+    <div class="login-wrap" style="min-height:600px">
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="login-logo-icon">Z</div>
+          <div class="login-title">ZANA System</div>
+          <div class="login-sub">Sales Operation Platform</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="form-group"><label class="form-label">อีเมล</label><input class="form-input" type="email" value="ceo@zana.co.th" /></div>
+          <div class="form-group"><label class="form-label">รหัสผ่าน</label><input class="form-input" type="password" value="••••••••" /></div>
+          <button class="btn-primary" style="width:100%;justify-content:center;padding:9px;margin-top:6px;font-size:13px" onclick="nav('ceo')">เข้าสู่ระบบ</button>
+          <p style="text-align:center;font-size:11px;color:var(--color-text-secondary)">เข้าสู่ระบบด้วย Google SSO</p>
+        </div>
+        <div style="margin-top:16px;padding-top:12px;border-top:0.5px solid var(--color-border-tertiary)">
+          <p style="font-size:11px;color:var(--color-text-secondary);margin-bottom:6px">ทดสอบด้วย Role:</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn-secondary" style="font-size:11px" onclick="setRole('CEO');nav('ceo')">CEO</button>
+            <button class="btn-secondary" style="font-size:11px" onclick="setRole('น้ำ');nav('admin')">น้ำ (Admin)</button>
+            <button class="btn-secondary" style="font-size:11px" onclick="setRole('Operation');nav('orders')">Operation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CEO DASHBOARD -->
+  <div class="page active" id="page-ceo">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+      <button class="btn-secondary" style="font-size:11px;background:#1B3A5C;color:#fff;border-color:#1B3A5C">เดือน</button>
+      <button class="btn-secondary" style="font-size:11px">สัปดาห์</button>
+      <button class="btn-secondary" style="font-size:11px">วันนี้</button>
+      <select class="search-select" style="font-size:11px">
+        <option>ทุกแอดมิน</option><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option>
+      </select>
+      <select class="search-select" style="font-size:11px">
+        <option>ทุก Source</option><option>Facebook Ads</option><option>ลูกค้าเก่า</option>
+      </select>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">ยอดขายรวม</div><div class="kpi-val">฿284,500</div><div class="kpi-sub kpi-pos">+18% vs เดือนก่อน</div></div>
+      <div class="kpi-card"><div class="kpi-label">จำนวนออเดอร์</div><div class="kpi-val">142</div><div class="kpi-sub kpi-pos">+11 บิล</div></div>
+      <div class="kpi-card"><div class="kpi-label">ROAS เฉลี่ย</div><div class="kpi-val" style="color:#27500A">7.4x</div><div class="kpi-sub">เป้า 2.5x — ผ่าน</div></div>
+      <div class="kpi-card"><div class="kpi-label">Winrate</div><div class="kpi-val" style="color:#27500A">36.7%</div><div class="kpi-sub">เป้า 30% — ผ่าน</div></div>
+      <div class="kpi-card"><div class="kpi-label">Gross Profit</div><div class="kpi-val">฿196,300</div><div class="kpi-sub">Margin 69%</div></div>
+      <div class="kpi-card"><div class="kpi-label">Net Profit</div><div class="kpi-val" style="color:#27500A">฿143,300</div><div class="kpi-sub">Net Margin 50%</div></div>
+      <div class="kpi-card"><div class="kpi-label">CRM วันนี้</div><div class="kpi-val" style="color:#A32D2D">14</div><div class="kpi-sub kpi-neg">ค้าง 6 รายการ</div></div>
+      <div class="kpi-card"><div class="kpi-label">สต๊อกใกล้หมด</div><div class="kpi-val" style="color:#854F0B">3</div><div class="kpi-sub kpi-neg">หมด 1 รายการ</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Leaderboard เดือนนี้</span></div>
+        <table class="tbl">
+          <tr><th>อันดับ</th><th>แอดมิน</th><th>ยอดขาย</th><th>บิล</th><th>Winrate</th><th>ROAS</th></tr>
+          <tr><td><span class="badge b-amber">1</span></td><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-t">น้ำ</div>น้ำ</div></td><td>฿98,400</td><td>48</td><td>41%</td><td style="color:#27500A">8.1x</td></tr>
+          <tr><td><span class="badge b-gray">2</span></td><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-j">จิ๊ก</div>จิ๊ก</div></td><td>฿96,200</td><td>52</td><td>38%</td><td style="color:#27500A">6.9x</td></tr>
+          <tr><td><span class="badge b-gray">3</span></td><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-o">ออย</div>ออย</div></td><td>฿89,900</td><td>42</td><td>31%</td><td style="color:#27500A">5.4x</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">ยอดขายรายสัปดาห์</span></div>
+        <div style="display:flex;align-items:flex-end;gap:5px;height:80px">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%"><div style="background:#1B3A5C;height:52px;border-radius:3px 3px 0 0"></div><div style="background:#0D6B6E;height:18px"></div></div><span style="font-size:10px;color:var(--color-text-secondary)">W1</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%"><div style="background:#1B3A5C;height:64px;border-radius:3px 3px 0 0"></div><div style="background:#0D6B6E;height:22px"></div></div><span style="font-size:10px;color:var(--color-text-secondary)">W2</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%"><div style="background:#1B3A5C;height:58px;border-radius:3px 3px 0 0"></div><div style="background:#0D6B6E;height:24px"></div></div><span style="font-size:10px;color:var(--color-text-secondary)">W3</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%"><div style="background:#1B3A5C;height:72px;border-radius:3px 3px 0 0"></div><div style="background:#0D6B6E;height:28px"></div></div><span style="font-size:10px;color:var(--color-text-secondary)">W4</span></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:6px"><span style="font-size:11px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;background:#1B3A5C;border-radius:2px;display:inline-block"></span>แชท</span><span style="font-size:11px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;background:#0D6B6E;border-radius:2px;display:inline-block"></span>โทร</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="page" id="page-admin">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div class="av av-t" style="width:36px;height:36px;font-size:14px">น้ำ</div>
+      <div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">น้ำ — มิถุนายน 2026</div><div style="font-size:11px;color:var(--color-text-secondary)">Admin / Telesales</div></div>
+      <select class="search-select" style="margin-left:auto;font-size:11px"><option>มิถุนายน 2026</option><option>พฤษภาคม 2026</option></select>
+    </div>
+    <div class="grid3">
+      <div class="kpi-card"><div class="kpi-label">ยอดแชท (FB+เก่า)</div><div class="kpi-val">฿98,400</div><div class="kpi-sub">48 บิล</div></div>
+      <div class="kpi-card"><div class="kpi-label">Winrate</div><div class="kpi-val kpi-pos">41%</div><div class="kpi-sub">เป้า 30%</div></div>
+      <div class="kpi-card"><div class="kpi-label">ROAS</div><div class="kpi-val kpi-pos">8.1x</div><div class="kpi-sub">เป้า 2.5x</div></div>
+      <div class="kpi-card"><div class="kpi-label">โทรรวมเดือน</div><div class="kpi-val">960</div><div class="kpi-sub">รับสาย 72%</div></div>
+      <div class="kpi-card"><div class="kpi-label">ปิดจากโทร</div><div class="kpi-val">118</div><div class="kpi-sub">Conv 12.3%</div></div>
+      <div class="kpi-card"><div class="kpi-label">วันผ่าน KPI</div><div class="kpi-val kpi-pos">18/21</div><div class="kpi-sub">3 วันไม่ผ่าน</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">งาน CRM วันนี้</span><span class="badge b-red">4 ค้าง</span></div>
+        <div class="call-item urgent"><div><div style="font-size:12px;font-weight:500;color:#A32D2D">คุณมาลี วงศ์สุข</div><div style="font-size:11px;color:#A32D2D">D+7 · ค้าง 2 วัน</div></div><button class="btn-danger" style="font-size:11px">โทรเลย</button></div>
+        <div class="call-item today"><div><div style="font-size:12px;font-weight:500;color:#633806">คุณนิดา รักไทย</div><div style="font-size:11px;color:#854F0B">D+14 · วันนี้</div></div><button class="btn-secondary" style="font-size:11px">โทร</button></div>
+        <div class="call-item"><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">คุณสุชาติ มาดี</div><div style="font-size:11px;color:var(--color-text-secondary)">D+3 · วันนี้</div></div><button class="btn-secondary" style="font-size:11px">โทร</button></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">KPI วันนี้</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--color-text-secondary)">โทร</span><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">112 / 100</span><span class="kpi-pass kpi-p"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> ผ่าน</span></div></div>
+          <div class="pbar-wrap"><div class="pbar" style="background:#27500A;width:100%"></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--color-text-secondary)">ปิด</span><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">14 / 10</span><span class="kpi-pass kpi-p"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> ผ่าน</span></div></div>
+          <div class="pbar-wrap"><div class="pbar" style="background:#27500A;width:100%"></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--color-text-secondary)">ยอด</span><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">฿3,420 / ฿2,200</span><span class="kpi-pass kpi-p"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> ผ่าน</span></div></div>
+          <div class="pbar-wrap"><div class="pbar" style="background:#27500A;width:100%"></div></div>
+          <div style="background:#EAF3DE;border-radius:var(--border-radius-md);padding:8px;text-align:center;margin-top:4px"><span style="font-size:13px;font-weight:500;color:#27500A">ผ่านทุก KPI วันนี้</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORT -->
+  <div class="page" id="page-import">
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">เพิ่มลูกค้าใหม่ทีละ 1 คน</span></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">ชื่อ Facebook</label><input class="form-input" value="มาลี วงศ์สุข" /></div>
+        <div class="form-group"><label class="form-label">ชื่อ-นามสกุล</label><input class="form-input" value="นางมาลี วงศ์สุข" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">เบอร์โทร</label><input class="form-input" value="089-123-4567" /></div>
+        <div class="form-group"><label class="form-label">ที่อยู่จัดส่ง</label><input class="form-input" value="123 ถ.พระราม 2 บางขุนเทียน" /></div>
+      </div>
+      <div class="form-row3">
+        <div class="form-group"><label class="form-label">สินค้าที่สนใจ</label><select class="form-select"><option>ZANA Serum</option><option>ZANA Cream</option></select></div>
+        <div class="form-group"><label class="form-label">จำนวน</label><input class="form-input" type="number" value="1" /></div>
+        <div class="form-group"><label class="form-label">ราคา (฿)</label><input class="form-input" type="number" value="890" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">มอบหมายแอดมิน</label><select class="form-select"><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option></select></div>
+        <div class="form-group"><label class="form-label">Source</label><select class="form-select"><option>Facebook Ads</option><option>ลูกค้าเก่า</option><option>Telesale</option><option>ตัวแทน</option></select></div>
+      </div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">หมายเหตุ</label><textarea class="form-input" rows="2" style="resize:none">ลูกค้าทักมาถามสินค้าตอนกลางคืน — ราคาพิเศษ</textarea></div>
+      <div style="padding:8px 10px;background:#E1F5EE;border-radius:var(--border-radius-md);border-left:3px solid #0D6B6E;margin-bottom:10px;font-size:12px;color:#085041">
+        <i class="ti ti-info-circle" style="font-size:14px;margin-right:4px" aria-hidden="true"></i>ระบบจะสร้าง CRM follow-up D+3/D+7/D+14/D+30 อัตโนมัติหลังบันทึก
+      </div>
+      <div style="display:flex;gap:8px"><button class="btn-primary"><i class="ti ti-plus" style="font-size:14px" aria-hidden="true"></i> บันทึก &amp; สร้าง CRM</button><button class="btn-secondary">ล้างข้อมูล</button></div>
+    </div>
+  </div>
+
+  <!-- EXCEL IMPORT -->
+  <div class="page" id="page-excel">
+    <div class="tab-bar"><div class="tab-item active">อัปโหลดไฟล์</div><div class="tab-item">Preview</div><div class="tab-item">ผลลัพธ์</div></div>
+    <div class="card">
+      <div class="upload-zone">
+        <div class="upload-icon"><i class="ti ti-file-spreadsheet" aria-hidden="true"></i></div>
+        <div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">ลาก Excel มาวาง หรือ คลิกเพื่อเลือกไฟล์</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">.xlsx, .xls รองรับสูงสุด 5,000 แถว</div>
+        <button class="btn-primary" style="margin-top:12px;font-size:12px"><i class="ti ti-upload" style="font-size:14px" aria-hidden="true"></i> เลือกไฟล์</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">Template Excel</span><button class="btn-secondary" style="font-size:11px"><i class="ti ti-download" style="font-size:13px" aria-hidden="true"></i> ดาวน์โหลด Template</button></div>
+      <table class="tbl">
+        <tr><th>คอลัมน์</th><th>ตัวอย่างข้อมูล</th><th>จำเป็น</th></tr>
+        <tr><td>ชื่อ Facebook</td><td>มาลี วงศ์สุข</td><td><span class="badge b-red">จำเป็น</span></td></tr>
+        <tr><td>ชื่อ-นามสกุล</td><td>นางมาลี วงศ์สุข</td><td><span class="badge b-gray">ไม่บังคับ</span></td></tr>
+        <tr><td>เบอร์โทร</td><td>089-123-4567</td><td><span class="badge b-red">จำเป็น</span></td></tr>
+        <tr><td>สินค้า</td><td>ZANA Serum</td><td><span class="badge b-gray">ไม่บังคับ</span></td></tr>
+        <tr><td>มอบหมายแอดมิน</td><td>น้ำ</td><td><span class="badge b-gray">ไม่บังคับ</span></td></tr>
+      </table>
+      <div style="margin-top:10px;padding:8px 10px;background:#FAEEDA;border-radius:var(--border-radius-md);font-size:12px;color:#633806"><i class="ti ti-alert-triangle" style="font-size:14px;margin-right:4px" aria-hidden="true"></i>ระบบจะตรวจเบอร์ซ้ำอัตโนมัติก่อน Import และแสดง Preview ให้ยืนยัน</div>
+    </div>
+  </div>
+
+  <!-- CRM PIPELINE -->
+  <div class="page" id="page-crm">
+    <div class="search-bar">
+      <input class="search-input" placeholder="ค้นหาชื่อ / เบอร์โทร..." />
+      <select class="search-select"><option>ทุกแอดมิน</option><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option></select>
+      <select class="search-select"><option>ทุก Source</option><option>Facebook Ads</option><option>Telesale</option></select>
+    </div>
+    <div class="crm-board">
+      <div><div class="crm-col-hdr" style="background:#E6F1FB;color:#0C447C">รอโทร (12)</div>
+        <div class="crm-col">
+          <div class="crm-card"><div class="crm-card-name">คุณสมหญิง ดีมาก</div><div class="crm-card-meta">ZANA Serum · จิ๊ก · D+3 พรุ่งนี้</div><div style="margin-top:4px;display:flex;gap:4px"><span class="badge b-blue">Facebook Ads</span></div></div>
+          <div class="crm-card"><div class="crm-card-name">คุณปรีชา แน่นอน</div><div class="crm-card-meta">ZANA Cream · ออย · D+3 วันนี้</div><div style="margin-top:4px"><span class="badge b-teal">ลูกค้าเก่า</span></div></div>
+          <div class="crm-card"><div class="crm-card-name">คุณวิไล สุขสันต์</div><div class="crm-card-meta">ZANA Toner · น้ำ · ใหม่</div><div style="margin-top:4px"><span class="badge b-blue">Facebook Ads</span></div></div>
+        </div>
+      </div>
+      <div><div class="crm-col-hdr" style="background:#FAEEDA;color:#633806">โทรแล้ว (8)</div>
+        <div class="crm-col">
+          <div class="crm-card"><div class="crm-card-name">คุณมาลี วงศ์สุข</div><div class="crm-card-meta">ไม่รับสาย 2 ครั้ง · น้ำ</div><div style="margin-top:4px"><span class="badge b-amber">โทรซ้ำ</span></div></div>
+          <div class="crm-card"><div class="crm-card-name">คุณนิดา รักไทย</div><div class="crm-card-meta">สนใจ รอคิด · ออย</div><div style="margin-top:4px"><span class="badge b-amber">รอติดตาม</span></div></div>
+        </div>
+      </div>
+      <div><div class="crm-col-hdr" style="background:#EAF3DE;color:#27500A">ปิดได้ (31)</div>
+        <div class="crm-col">
+          <div class="crm-card"><div class="crm-card-name">คุณสุชาติ ขยันดี</div><div class="crm-card-meta">ZANA Serum × 2 · 1,780฿</div><div style="margin-top:4px"><span class="badge b-green">ปิดได้</span></div></div>
+          <div class="crm-card"><div class="crm-card-name">คุณลัดดา ใจดี</div><div class="crm-card-meta">ZANA Cream × 1 · 890฿</div><div style="margin-top:4px"><span class="badge b-green">ปิดได้</span></div></div>
+        </div>
+      </div>
+      <div><div class="crm-col-hdr" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">ปิดเคส (6)</div>
+        <div class="crm-col">
+          <div class="crm-card"><div class="crm-card-name">คุณกมล ไม่ตรงเวลา</div><div class="crm-card-meta">ไม่สนใจ · จิ๊ก</div><div style="margin-top:4px"><span class="badge b-gray">ปิดเคส</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALL QUEUE -->
+  <div class="page" id="page-queue">
+    <div class="grid3" style="margin-bottom:12px">
+      <div class="kpi-card"><div class="kpi-label">ต้องโทรวันนี้</div><div class="kpi-val">14</div></div>
+      <div class="kpi-card"><div class="kpi-label">ค้างโทร</div><div class="kpi-val kpi-neg">6</div></div>
+      <div class="kpi-card"><div class="kpi-label">โทรแล้ววันนี้</div><div class="kpi-val kpi-pos">8</div></div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">รายการโทรวันนี้</span><select class="search-select" style="font-size:11px"><option>ทุกแอดมิน</option><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option></select></div>
+      <table class="tbl">
+        <tr><th style="width:140px">ลูกค้า</th><th style="width:90px">เบอร์</th><th style="width:80px">รอบโทร</th><th style="width:60px">แอดมิน</th><th style="width:80px">สถานะ</th><th>Action</th></tr>
+        <tr style="background:#FCEBEB"><td><div style="font-size:12px;font-weight:500">คุณมาลี วงศ์สุข</div><div style="font-size:11px;color:#A32D2D">ค้าง 2 วัน</div></td><td style="color:var(--color-text-secondary)">089-123-4567</td><td><span class="badge b-red">D+7</span></td><td><div class="av av-t" style="width:22px;height:22px;font-size:10px">น้ำ</div></td><td><span class="badge b-red">ค้าง</span></td><td><div style="display:flex;gap:4px"><button class="btn-primary" style="font-size:11px;padding:4px 8px">บันทึกโทร</button></div></td></tr>
+        <tr style="background:#FAEEDA"><td><div style="font-size:12px;font-weight:500">คุณนิดา รักไทย</div><div style="font-size:11px;color:#854F0B">ต้องโทรวันนี้</div></td><td style="color:var(--color-text-secondary)">081-234-5678</td><td><span class="badge b-amber">D+14</span></td><td><div class="av av-o" style="width:22px;height:22px;font-size:10px">ออย</div></td><td><span class="badge b-amber">วันนี้</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 8px">บันทึกโทร</button></td></tr>
+        <tr><td><div style="font-size:12px;font-weight:500">คุณสุชาติ มาดี</div></td><td style="color:var(--color-text-secondary)">062-345-6789</td><td><span class="badge b-blue">D+3</span></td><td><div class="av av-j" style="width:22px;height:22px;font-size:10px">จิ๊ก</div></td><td><span class="badge b-gray">วันนี้</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 8px">บันทึกโทร</button></td></tr>
+        <tr><td><div style="font-size:12px;font-weight:500">คุณปรีชา แน่นอน</div></td><td style="color:var(--color-text-secondary)">083-456-7890</td><td><span class="badge b-teal">D+30</span></td><td><div class="av av-t" style="width:22px;height:22px;font-size:10px">น้ำ</div></td><td><span class="badge b-gray">วันนี้</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 8px">บันทึกโทร</button></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CUSTOMER DETAIL -->
+  <div class="page" id="page-customer">
+    <div class="grid2">
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:0.5px solid var(--color-border-tertiary)">
+          <div class="av-g av" style="width:44px;height:44px;font-size:16px;font-weight:500">มว</div>
+          <div><div style="font-size:15px;font-weight:500;color:var(--color-text-primary)">คุณมาลี วงศ์สุข</div><div style="font-size:12px;color:var(--color-text-secondary)">089-123-4567 · ลูกค้าเก่า 2 ปี</div></div>
+          <span class="badge b-green" style="margin-left:auto">ลูกค้าประจำ</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px">
+          <div><span style="color:var(--color-text-secondary)">Source</span><br><span style="font-weight:500">Facebook Ads</span></div>
+          <div><span style="color:var(--color-text-secondary)">แอดมิน</span><br><span style="font-weight:500">น้ำ</span></div>
+          <div><span style="color:var(--color-text-secondary)">ออเดอร์รวม</span><br><span style="font-weight:500">8 บิล</span></div>
+          <div><span style="color:var(--color-text-secondary)">ยอดรวม</span><br><span style="font-weight:500;color:#27500A">฿7,120</span></div>
+          <div style="grid-column:1/-1"><span style="color:var(--color-text-secondary)">ที่อยู่</span><br><span>123 ถ.พระราม 2 บางขุนเทียน กทม. 10150</span></div>
+        </div>
+        <div style="margin-top:10px"><div class="section-label" style="margin-bottom:6px">CRM Status</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge b-blue">D+3: 14 มิ.ย.</span><span class="badge b-blue">D+7: 18 มิ.ย.</span><span class="badge b-blue">D+14: 25 มิ.ย.</span><span class="badge b-gray">D+30: 11 ก.ค.</span></div></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">ประวัติออเดอร์</span></div>
+        <table class="tbl">
+          <tr><th>วันที่</th><th>สินค้า</th><th>ยอด</th><th>สถานะ</th></tr>
+          <tr><td>11 มิ.ย.</td><td>ZANA Serum × 2</td><td>฿1,780</td><td><span class="badge b-green">ได้รับแล้ว</span></td></tr>
+          <tr><td>14 พ.ค.</td><td>ZANA Cream × 1</td><td>฿890</td><td><span class="badge b-green">ได้รับแล้ว</span></td></tr>
+          <tr><td>02 เม.ย.</td><td>ZANA Toner × 1</td><td>฿650</td><td><span class="badge b-green">ได้รับแล้ว</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">ประวัติการโทร</span><button class="btn-primary" style="font-size:11px">+ บันทึกการโทร</button></div>
+      <table class="tbl">
+        <tr><th>วันที่</th><th>แอดมิน</th><th>สถานะ</th><th>ผลลัพธ์</th><th>หมายเหตุ</th></tr>
+        <tr><td>11 มิ.ย.</td><td>น้ำ</td><td><span class="badge b-green">รับสาย</span></td><td><span class="badge b-green">ปิดได้</span></td><td>Serum × 2 — ยอด 1,780฿</td></tr>
+        <tr><td>08 มิ.ย.</td><td>น้ำ</td><td><span class="badge b-red">ไม่รับสาย</span></td><td><span class="badge b-amber">โทรซ้ำ</span></td><td>โทรช่วงเช้า 10 โมง</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CALL LOG -->
+  <div class="page" id="page-calllog">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">บันทึกการโทร</span></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">ลูกค้า</label><input class="form-input" value="คุณมาลี วงศ์สุข" /></div>
+          <div class="form-group"><label class="form-label">วันที่โทร</label><input class="form-input" type="date" value="2026-06-19" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">สถานะ</label><select class="form-select"><option>รับสาย</option><option>ไม่รับสาย</option></select></div>
+          <div class="form-group"><label class="form-label">ผลลัพธ์</label><select class="form-select"><option>ปิดยอดได้</option><option>ปิดไม่ได้</option><option>โทรซ้ำ</option><option>รอคิด</option><option>ไม่สนใจ</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">สินค้าที่เสนอ</label><input class="form-input" value="ZANA Serum" /></div>
+          <div class="form-group"><label class="form-label">ยอดปิดได้ (฿)</label><input class="form-input" type="number" value="1780" /></div>
+        </div>
+        <div class="form-group" style="margin-bottom:10px"><label class="form-label">หมายเหตุ</label><textarea class="form-input" rows="2" style="resize:none">ลูกค้าสนใจเพิ่มอีก 1 ขวด</textarea></div>
+        <div style="display:flex;gap:6px">
+          <button class="btn-primary"><i class="ti ti-check" style="font-size:14px" aria-hidden="true"></i> บันทึก</button>
+          <button class="btn-secondary" onclick="nav('orders')">สร้าง Order จาก Call</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">ประวัติโทรล่าสุด</span></div>
+        <table class="tbl">
+          <tr><th>วันที่</th><th>ลูกค้า</th><th>แอดมิน</th><th>ผล</th><th>ยอด</th></tr>
+          <tr><td>19 มิ.ย.</td><td>คุณมาลี</td><td>น้ำ</td><td><span class="badge b-green">ปิดได้</span></td><td>฿1,780</td></tr>
+          <tr><td>19 มิ.ย.</td><td>คุณสมชาย</td><td>จิ๊ก</td><td><span class="badge b-red">ไม่รับ</span></td><td>—</td></tr>
+          <tr><td>19 มิ.ย.</td><td>คุณนิดา</td><td>ออย</td><td><span class="badge b-amber">รอคิด</span></td><td>—</td></tr>
+          <tr><td>18 มิ.ย.</td><td>คุณลัดดา</td><td>น้ำ</td><td><span class="badge b-green">ปิดได้</span></td><td>฿890</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDERS -->
+  <div class="page" id="page-orders">
+    <div class="search-bar">
+      <input class="search-input" placeholder="ค้นหา Order / ชื่อลูกค้า / Tracking..." />
+      <select class="search-select"><option>ทุก Source</option><option>Facebook Ads</option><option>Telesale</option></select>
+      <select class="search-select"><option>ทุกสถานะ</option><option>รอจัดส่ง</option><option>จัดส่งแล้ว</option><option>ได้รับแล้ว</option></select>
+    </div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi-card"><div class="kpi-label">ยอดรวม</div><div class="kpi-val">฿284,500</div></div>
+      <div class="kpi-card"><div class="kpi-label">รอจัดส่ง</div><div class="kpi-val kpi-neg">18</div></div>
+      <div class="kpi-card"><div class="kpi-label">จัดส่งแล้ว</div><div class="kpi-val">86</div></div>
+      <div class="kpi-card"><div class="kpi-label">ได้รับแล้ว</div><div class="kpi-val kpi-pos">38</div></div>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <div class="card-hdr"><span class="card-title">รายการออเดอร์</span><button class="btn-primary" style="font-size:11px">+ เพิ่มออเดอร์</button></div>
+      <table class="tbl">
+        <tr><th style="width:90px">Order No.</th><th style="width:70px">วันที่</th><th style="width:120px">ลูกค้า</th><th style="width:60px">แอดมิน</th><th>สินค้า</th><th style="width:80px">ยอด</th><th style="width:70px">Source</th><th style="width:90px">สถานะ</th><th style="width:80px">Tracking</th></tr>
+        <tr><td style="font-family:var(--font-mono);font-size:11px">ORD-260619-0142</td><td>19 มิ.ย.</td><td>คุณมาลี วงศ์สุข</td><td><div class="av av-t" style="width:20px;height:20px;font-size:10px">น้ำ</div></td><td>ZANA Serum × 2</td><td>฿1,780</td><td><span class="badge b-blue" style="font-size:10px">FB Ads</span></td><td><span class="badge b-amber">รอจัดส่ง</span></td><td>—</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-size:11px">ORD-260618-0141</td><td>18 มิ.ย.</td><td>คุณสุชาติ มาดี</td><td><div class="av av-j" style="width:20px;height:20px;font-size:10px">จิ๊ก</div></td><td>ZANA Cream × 1</td><td>฿890</td><td><span class="badge b-teal" style="font-size:10px">เก่า</span></td><td><span class="badge b-blue">จัดส่งแล้ว</span></td><td style="font-family:var(--font-mono);font-size:10px">TH123456789</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-size:11px">ORD-260617-0140</td><td>17 มิ.ย.</td><td>คุณนิดา รักไทย</td><td><div class="av av-o" style="width:20px;height:20px;font-size:10px">ออย</div></td><td>ZANA Serum × 1</td><td>฿890</td><td><span class="badge b-purple" style="font-size:10px">โทร</span></td><td><span class="badge b-green">ได้รับแล้ว</span></td><td style="font-family:var(--font-mono);font-size:10px">TH987654321</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- STOCK -->
+  <div class="page" id="page-stock">
+    <div style="padding:8px 10px;background:#FCEBEB;border-radius:var(--border-radius-md);border-left:3px solid #E24B4A;margin-bottom:12px;font-size:12px;color:#A32D2D;display:flex;align-items:center;gap:8px"><i class="ti ti-alert-triangle" style="font-size:14px" aria-hidden="true"></i>ZANA Serum สีชมพู — หมดสต๊อก! ผลิตเพิ่มด่วน</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">สรุปสต๊อก</span><button class="btn-primary" style="font-size:11px">+ รับสต๊อก</button></div>
+        <table class="tbl">
+          <tr><th>สินค้า / SKU</th><th style="width:70px">คงเหลือ</th><th style="width:100px">สถานะ</th><th style="width:80px">มูลค่า</th></tr>
+          <tr><td><div style="font-size:12px;font-weight:500">ZANA Serum สีชมพู</div></td><td style="color:#A32D2D;font-weight:500">0</td><td><span class="badge b-red">หมดสต๊อก</span></td><td>฿0</td></tr>
+          <tr><td><div style="font-size:12px;font-weight:500">ZANA Cream มะลิ</div></td><td style="color:#854F0B;font-weight:500">4</td><td><span class="badge b-amber">ใกล้หมด</span></td><td>฿1,200</td></tr>
+          <tr><td><div style="font-size:12px;font-weight:500">ZANA Serum สีขาว</div></td><td style="font-weight:500">84</div></td><td><span class="badge b-green">ปกติ</span></td><td>฿25,200</td></tr>
+          <tr><td><div style="font-size:12px;font-weight:500">ZANA Toner กลางคืน</div></td><td style="color:#854F0B;font-weight:500">11</td><td><span class="badge b-amber">ใกล้หมด</span></td><td>฿3,850</td></tr>
+          <tr><td><div style="font-size:12px;font-weight:500">ZANA Mask × 5</div></td><td style="font-weight:500">42</td><td><span class="badge b-green">ปกติ</span></td><td>฿8,400</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Stock Movement ล่าสุด</span></div>
+        <table class="tbl">
+          <tr><th>วันที่</th><th>สินค้า</th><th>ประเภท</th><th>จำนวน</th></tr>
+          <tr><td>19 มิ.ย.</td><td>Serum ขาว</td><td><span class="badge b-red" style="font-size:10px">ออก</span></td><td style="color:#A32D2D">-2</td></tr>
+          <tr><td>18 มิ.ย.</td><td>Cream มะลิ</td><td><span class="badge b-red" style="font-size:10px">ออก</span></td><td style="color:#A32D2D">-1</td></tr>
+          <tr><td>17 มิ.ย.</td><td>Serum ชมพู</td><td><span class="badge b-green" style="font-size:10px">เข้า</span></td><td style="color:#27500A">+50</td></tr>
+          <tr><td>16 มิ.ย.</td><td>Toner</td><td><span class="badge b-red" style="font-size:10px">ออก</span></td><td style="color:#A32D2D">-3</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="page" id="page-products">
+    <div class="search-bar">
+      <input class="search-input" placeholder="ค้นหาสินค้า / SKU..." />
+      <select class="search-select"><option>ทุกหมวด</option><option>Serum</option><option>Cream</option><option>Toner</option></select>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">Product Master</span><button class="btn-primary" style="font-size:11px">+ เพิ่มสินค้า</button></div>
+      <table class="tbl">
+        <tr><th>Product Code</th><th>ชื่อสินค้า</th><th style="width:80px">ต้นทุน/ชิ้น</th><th style="width:80px">ราคาขาย</th><th>SKU ที่มี</th><th style="width:90px">Threshold</th><th style="width:70px">สถานะ</th></tr>
+        <tr><td style="font-family:var(--font-mono)">PRD-001</td><td><div style="font-weight:500">ZANA Serum</div></td><td>฿300</td><td>฿890</td><td>สีชมพู, สีขาว, สีทอง</td><td>20 ชิ้น</td><td><span class="badge b-green">Active</span></td></tr>
+        <tr><td style="font-family:var(--font-mono)">PRD-002</td><td><div style="font-weight:500">ZANA Cream</div></td><td>฿280</td><td>฿890</td><td>มะลิ, กุหลาบ</td><td>10 ชิ้น</td><td><span class="badge b-green">Active</span></td></tr>
+        <tr><td style="font-family:var(--font-mono)">PRD-003</td><td><div style="font-weight:500">ZANA Toner</div></td><td>฿350</td><td>฿650</td><td>กลางคืน, กลางวัน</td><td>15 ชิ้น</td><td><span class="badge b-green">Active</span></td></tr>
+        <tr><td style="font-family:var(--font-mono)">PRD-004</td><td><div style="font-weight:500">ZANA Mask</div></td><td>฿120</td><td>฿200</td><td>แผ่น × 5</td><td>20 ชิ้น</td><td><span class="badge b-green">Active</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ADS -->
+  <div class="page" id="page-ads">
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">กรอกค่าแอดรายวัน (CEO)</span></div>
+      <div class="form-row3">
+        <div class="form-group"><label class="form-label">วันที่</label><input class="form-input" type="date" value="2026-06-19" /></div>
+        <div class="form-group"><label class="form-label">เพจสินค้า</label><select class="form-select"><option>ZANA Official</option><option>ZANA Shopee</option></select></div>
+        <div class="form-group"><label class="form-label">แอดมิน</label><select class="form-select"><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option></select></div>
+      </div>
+      <div class="form-row3">
+        <div class="form-group"><label class="form-label">ค่าแอด (฿)</label><input class="form-input" type="number" value="1840" /></div>
+        <div class="form-group"><label class="form-label">ทักใหม่ (คน)</label><input class="form-input" type="number" value="18" /></div>
+        <div class="form-group"><label class="form-label">Target ROAS</label><input class="form-input" type="number" value="2.5" /></div>
+      </div>
+      <button class="btn-primary" style="font-size:12px"><i class="ti ti-device-floppy" style="font-size:14px" aria-hidden="true"></i> บันทึก — ระบบดึงยอดจริงจาก Orders อัตโนมัติ</button>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">Ads KPI รายวัน</span></div>
+      <table class="tbl">
+        <tr><th>วันที่</th><th>แอดมิน</th><th>ค่าแอด</th><th>ทักใหม่</th><th>ปิดได้</th><th>CPL</th><th>Winrate</th><th>ROAS</th><th>ค่าแอด/ยอด</th></tr>
+        <tr><td>19 มิ.ย.</td><td>น้ำ</td><td>฿1,840</td><td>18</td><td>6</td><td>฿102</td><td>33%</td><td style="color:#27500A;font-weight:500">7.1x</td><td>14%</td></tr>
+        <tr><td>18 มิ.ย.</td><td>จิ๊ก</td><td>฿2,100</td><td>22</td><td>9</td><td>฿95</td><td>41%</td><td style="color:#27500A;font-weight:500">8.4x</td><td>11%</td></tr>
+        <tr><td>18 มิ.ย.</td><td>ออย</td><td>฿1,600</td><td>15</td><td>4</td><td>฿107</td><td>27%</td><td style="color:#854F0B;font-weight:500">2.2x</td><td>46%</td></tr>
+        <tr><td>17 มิ.ย.</td><td>น้ำ</td><td>฿1,920</td><td>20</td><td>8</td><td>฿96</td><td>40%</td><td style="color:#27500A;font-weight:500">7.8x</td><td>13%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TELESALES -->
+  <div class="page" id="page-telesales">
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">กรอกยอดโทรรายวัน</span></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">วันที่</label><input class="form-input" type="date" value="2026-06-19" /></div>
+        <div class="form-group"><label class="form-label">พนักงาน</label><select class="form-select"><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option></select></div>
+      </div>
+      <div class="form-row3">
+        <div class="form-group"><label class="form-label">โทรทั้งหมด (สาย)</label><input class="form-input" type="number" value="112" /></div>
+        <div class="form-group"><label class="form-label">รับสาย</label><input class="form-input" type="number" value="86" /></div>
+        <div class="form-group"><label class="form-label">ไม่รับสาย</label><input class="form-input" type="number" value="26" /></div>
+      </div>
+      <div class="form-row3">
+        <div class="form-group"><label class="form-label">ปิดได้ (บิล)</label><input class="form-input" type="number" value="14" /></div>
+        <div class="form-group"><label class="form-label">จำนวนบิล</label><input class="form-input" type="number" value="14" /></div>
+        <div class="form-group"><label class="form-label">ยอดขาย (฿)</label><input class="form-input" type="number" value="3420" /></div>
+      </div>
+      <div style="background:#EAF3DE;border-radius:var(--border-radius-md);padding:10px;margin:8px 0">
+        <div style="font-size:12px;font-weight:500;color:#27500A;margin-bottom:6px">ผล KPI วันนี้ — ผ่านทั้งหมด</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+          <div style="text-align:center"><div style="font-size:11px;color:#27500A">โทร 112 / 100</div><span class="kpi-pass kpi-p">ผ่าน</span></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#27500A">ปิด 14 / 10</div><span class="kpi-pass kpi-p">ผ่าน</span></div>
+          <div style="text-align:center"><div style="font-size:11px;color:#27500A">฿3,420 / ฿2,200</div><span class="kpi-pass kpi-p">ผ่าน</span></div>
+        </div>
+      </div>
+      <button class="btn-primary"><i class="ti ti-device-floppy" style="font-size:14px" aria-hidden="true"></i> บันทึกยอดโทร</button>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">สรุปรายเดือน</span></div>
+      <table class="tbl">
+        <tr><th>วันที่</th><th>พนักงาน</th><th>โทร</th><th>ปิด</th><th>ยอด</th><th>Conv</th><th>KPI โทร</th><th>KPI ปิด</th><th>KPI ยอด</th><th>ผล</th></tr>
+        <tr><td>19 มิ.ย.</td><td>น้ำ</td><td>112</td><td>14</td><td>฿3,420</td><td>12.5%</td><td><span class="kpi-pass kpi-p">ผ่าน</span></td><td><span class="kpi-pass kpi-p">ผ่าน</span></td><td><span class="kpi-pass kpi-p">ผ่าน</span></td><td><span class="badge b-green">ผ่าน</span></td></tr>
+        <tr><td>18 มิ.ย.</td><td>น้ำ</td><td>98</td><td>9</td><td>฿1,980</td><td>9.2%</td><td><span class="kpi-pass kpi-f">ไม่ผ่าน</span></td><td><span class="kpi-pass kpi-f">ไม่ผ่าน</span></td><td><span class="kpi-pass kpi-f">ไม่ผ่าน</span></td><td><span class="badge b-red">ไม่ผ่าน</span></td></tr>
+        <tr><td>17 มิ.ย.</td><td>จิ๊ก</td><td>118</td><td>13</td><td>฿2,860</td><td>11%</td><td><span class="kpi-pass kpi-p">ผ่าน</span></td><td><span class="kpi-pass kpi-p">ผ่าน</span></td><td><span class="kpi-pass kpi-p">ผ่าน</span></td><td><span class="badge b-green">ผ่าน</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- EVALUATION -->
+  <div class="page" id="page-eval">
+    <div class="search-bar" style="margin-bottom:12px">
+      <select class="search-select"><option>วันนี้ 19 มิ.ย.</option><option>18 มิ.ย.</option><option>17 มิ.ย.</option></select>
+      <select class="search-select"><option>ทุกคน</option><option>น้ำ</option><option>จิ๊ก</option><option>ออย</option></select>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div class="av av-t" style="width:36px;height:36px;font-size:14px">น้ำ</div><div><div style="font-size:13px;font-weight:500">น้ำ</div><div style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 2026</div></div><span class="badge b-green" style="margin-left:auto">ผ่าน</span></div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:12px">
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">บิลแชท</span><span>8 บิล</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">ยอดแชท</span><span>฿7,120</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">โทร / ปิด</span><span>112 / 14</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">ยอดโทร</span><span>฿3,420</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">KPI แชท</span><span class="kpi-pass kpi-p">ผ่าน</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">KPI โทร</span><span class="kpi-pass kpi-p">ผ่าน</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div class="av av-j" style="width:36px;height:36px;font-size:14px">จิ๊ก</div><div><div style="font-size:13px;font-weight:500">จิ๊ก</div><div style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 2026</div></div><span class="badge b-green" style="margin-left:auto">ผ่าน</span></div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:12px">
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">บิลแชท</span><span>10 บิล</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">ยอดแชท</span><span>฿8,900</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">โทร / ปิด</span><span>118 / 13</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">ยอดโทร</span><span>฿2,860</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">KPI แชท</span><span class="kpi-pass kpi-p">ผ่าน</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">KPI โทร</span><span class="kpi-pass kpi-p">ผ่าน</span></div>
+        </div>
+      </div>
+      <div class="card" style="border-color:#F09595">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div class="av av-o" style="width:36px;height:36px;font-size:14px">ออย</div><div><div style="font-size:13px;font-weight:500">ออย</div><div style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 2026</div></div><span class="badge b-red" style="margin-left:auto">ไม่ผ่าน</span></div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:12px">
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">บิลแชท</span><span>4 บิล</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">ยอดแชท</span><span>฿3,560</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">โทร / ปิด</span><span>94 / 6</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">ยอดโทร</span><span>฿1,320</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">KPI แชท</span><span class="kpi-pass kpi-p">ผ่าน</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">KPI โทร</span><span class="kpi-pass kpi-f">ไม่ผ่าน</span></div>
+        </div>
+        <div style="margin-top:8px;background:#FCEBEB;border-radius:var(--border-radius-md);padding:6px 8px;font-size:11px;color:#A32D2D">โทรไม่ถึง (94/100) · ยอดไม่ถึง (฿1,320/฿2,200)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COST -->
+  <div class="page" id="page-cost">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">ค่าใช้จ่ายเพิ่มเติม</span><button class="btn-primary" style="font-size:11px">+ เพิ่ม</button></div>
+        <table class="tbl">
+          <tr><th>วันที่</th><th>หมวด</th><th>รายละเอียด</th><th>จำนวน</th></tr>
+          <tr><td>19 มิ.ย.</td><td><span class="badge b-blue">ค่าส่ง</span></td><td>Kerry Express มิถุนายน</td><td>฿4,200</td></tr>
+          <tr><td>18 มิ.ย.</td><td><span class="badge b-purple">ค่าแอด</span></td><td>Boost Post FB</td><td>฿2,000</td></tr>
+          <tr><td>15 มิ.ย.</td><td><span class="badge b-gray">อื่นๆ</span></td><td>ค่าบรรจุภัณฑ์</td><td>฿1,800</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Cost Settings</span><button class="btn-secondary" style="font-size:11px">แก้ไข</button></div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+          <div class="setting-row" style="padding:6px 0"><span class="setting-label">Shopee Fee</span><span style="font-weight:500">5%</span></div>
+          <div class="setting-row" style="padding:6px 0"><span class="setting-label">TikTok Fee</span><span style="font-weight:500">4%</span></div>
+          <div class="setting-row" style="padding:6px 0"><span class="setting-label">Payment Gateway</span><span style="font-weight:500">1.5%</span></div>
+          <div class="setting-row" style="padding:6px 0"><span class="setting-label">ค่าส่งพื้นฐาน</span><span style="font-weight:500">฿50</span></div>
+          <div class="setting-row" style="padding:6px 0;border:none"><span class="setting-label">COD Extra Fee</span><span style="font-weight:500">฿25</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P&L -->
+  <div class="page" id="page-pnl">
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="btn-secondary" style="font-size:11px;background:#1B3A5C;color:#fff;border-color:#1B3A5C">มิถุนายน 2026</button>
+      <button class="btn-secondary" style="font-size:11px">พฤษภาคม 2026</button>
+      <button class="btn-secondary" style="font-size:11px">เมษายน 2026</button>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">P&L Statement — มิถุนายน 2026</span></div>
+        <div class="pnl-section">
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px">REVENUE</div>
+          <div class="pnl-row"><span>ยอดขายรวม</span><span>฿284,500</span></div>
+          <div class="pnl-row"><span>ส่วนลด</span><span style="color:#A32D2D">-฿8,200</span></div>
+          <div class="pnl-row pnl-total"><span style="font-weight:500">Net Revenue</span><span style="font-weight:500">฿276,300</span></div>
+        </div>
+        <div class="pnl-section">
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px">COST OF GOODS</div>
+          <div class="pnl-row"><span>COGS (ต้นทุนสินค้า)</span><span style="color:#A32D2D">-฿88,200</span></div>
+          <div class="pnl-row pnl-total"><span style="font-weight:500">Gross Profit</span><span style="font-weight:500;color:#27500A">฿188,100 (68.1%)</span></div>
+        </div>
+        <div class="pnl-section">
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px">OPERATING EXPENSES</div>
+          <div class="pnl-row"><span>ค่าโฆษณา</span><span style="color:#A32D2D">-฿38,200</span></div>
+          <div class="pnl-row"><span>ค่าส่ง</span><span style="color:#A32D2D">-฿4,200</span></div>
+          <div class="pnl-row"><span>ค่าบรรจุภัณฑ์</span><span style="color:#A32D2D">-฿1,800</span></div>
+          <div class="pnl-row"><span>ค่าธรรมเนียม Payment</span><span style="color:#A32D2D">-฿600</span></div>
+          <div class="pnl-row pnl-total" style="border-top:2px solid var(--color-border-secondary)!important"><span style="font-weight:500">Net Profit</span><span style="font-weight:500;color:#27500A;font-size:15px">฿143,300 (51.9%)</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-hdr"><span class="card-title">Margin Trend</span></div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:60px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="background:#0D6B6E;width:100%;height:42px;border-radius:3px 3px 0 0"></div><span style="font-size:10px;color:var(--color-text-secondary)">เม.ย.</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="background:#0D6B6E;width:100%;height:48px;border-radius:3px 3px 0 0"></div><span style="font-size:10px;color:var(--color-text-secondary)">พ.ค.</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="background:#1B3A5C;width:100%;height:54px;border-radius:3px 3px 0 0"></div><span style="font-size:10px;color:var(--color-text-secondary)">มิ.ย.</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--color-text-secondary)"><span>Net Margin</span><span style="font-weight:500;color:#27500A">51.9%</span></div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><span class="card-title">Breakdown by Source</span></div>
+          <table class="tbl">
+            <tr><th>Source</th><th>ยอด</th><th>สัดส่วน</th></tr>
+            <tr><td><span class="badge b-blue">FB Ads</span></td><td>฿168,400</td><td>59%</td></tr>
+            <tr><td><span class="badge b-teal">เก่า</span></td><td>฿64,200</td><td>23%</td></tr>
+            <tr><td><span class="badge b-purple">โทร</span></td><td>฿38,700</td><td>14%</td></tr>
+            <tr><td><span class="badge b-gray">อื่นๆ</span></td><td>฿13,200</td><td>4%</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="page" id="page-settings">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">KPI Settings</span><button class="btn-primary" style="font-size:11px">บันทึก</button></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="form-row"><div class="form-group"><label class="form-label">KPI Min Calls/Day</label><input class="form-input" type="number" value="100" /></div><div class="form-group"><label class="form-label">KPI Min Bills/Day</label><input class="form-input" type="number" value="10" /></div></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">KPI Min Revenue/Day (฿)</label><input class="form-input" type="number" value="2200" /></div><div class="form-group"><label class="form-label">Target ROAS</label><input class="form-input" type="number" value="2.5" /></div></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">Max Ad/Revenue Ratio</label><input class="form-input" type="number" value="40" /><span style="font-size:11px;color:var(--color-text-secondary)">%</span></div><div class="form-group"><label class="form-label">Min Winrate</label><input class="form-input" type="number" value="30" /><span style="font-size:11px;color:var(--color-text-secondary)">%</span></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">System Settings</span></div>
+        <div class="setting-row"><div><div class="setting-label">Auto-create CRM หลัง Import</div><div class="setting-sub">สร้าง followup D+3/7/14/30 อัตโนมัติ</div></div><div class="toggle on"></div></div>
+        <div class="setting-row"><div><div class="setting-label">Auto-deduct Stock</div><div class="setting-sub">ตัดสต๊อกเมื่อสถานะ = ได้รับแล้ว</div></div><div class="toggle on"></div></div>
+        <div class="setting-row"><div><div class="setting-label">แจ้งเตือน CRM ค้าง</div><div class="setting-sub">แจ้งในระบบเมื่อเกินกำหนด</div></div><div class="toggle on"></div></div>
+        <div class="setting-row"><div><div class="setting-label">แจ้งเตือนสต๊อกต่ำ</div><div class="setting-sub">แจ้งเมื่อสต๊อก &lt; Threshold</div></div><div class="toggle on"></div></div>
+        <div class="setting-row" style="border:none"><div><div class="setting-label">Audit Log</div><div class="setting-sub">บันทึกทุกการแก้ไขข้อมูลสำคัญ</div></div><div class="toggle on"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USERS -->
+  <div class="page" id="page-users">
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">จัดการผู้ใช้งาน</span><button class="btn-primary" style="font-size:11px">+ เพิ่มผู้ใช้</button></div>
+      <table class="tbl">
+        <tr><th>ผู้ใช้</th><th>อีเมล</th><th>Role</th><th>สถานะ</th><th>เข้าสู่ระบบล่าสุด</th><th>Action</th></tr>
+        <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="av-g av" style="width:28px;height:28px">ซ</div><div><div style="font-weight:500;font-size:12px">ซาน่า ไดนาสตี้</div><div style="font-size:11px;color:var(--color-text-secondary)">เจ้าของ</div></div></div></td><td style="font-size:11px">ceo@zana.co.th</td><td><span class="badge b-amber">CEO</span></td><td><span class="badge b-green">Active</span></td><td style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 09:12</td><td><button class="btn-secondary" style="font-size:11px">แก้ไข</button></td></tr>
+        <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="av av-t">น้ำ</div><div><div style="font-weight:500;font-size:12px">น้ำ</div><div style="font-size:11px;color:var(--color-text-secondary)">Admin/Telesales</div></div></div></td><td style="font-size:11px">nam@zana.co.th</td><td><span class="badge b-blue">Admin</span></td><td><span class="badge b-green">Active</span></td><td style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 08:30</td><td><button class="btn-secondary" style="font-size:11px">แก้ไข</button></td></tr>
+        <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="av av-j">จิ๊ก</div><div><div style="font-weight:500;font-size:12px">จิ๊ก</div><div style="font-size:11px;color:var(--color-text-secondary)">Admin/Telesales</div></div></div></td><td style="font-size:11px">jik@zana.co.th</td><td><span class="badge b-blue">Admin</span></td><td><span class="badge b-green">Active</span></td><td style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 08:45</td><td><button class="btn-secondary" style="font-size:11px">แก้ไข</button></td></tr>
+        <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="av av-o">ออย</div><div><div style="font-weight:500;font-size:12px">ออย</div><div style="font-size:11px;color:var(--color-text-secondary)">Admin/Telesales</div></div></div></td><td style="font-size:11px">oi@zana.co.th</td><td><span class="badge b-blue">Admin</span></td><td><span class="badge b-green">Active</span></td><td style="font-size:11px;color:var(--color-text-secondary)">19 มิ.ย. 08:55</td><td><button class="btn-secondary" style="font-size:11px">แก้ไข</button></td></tr>
+        <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="av-g av">OP</div><div><div style="font-weight:500;font-size:12px">เสมียน 1</div><div style="font-size:11px;color:var(--color-text-secondary)">Operation</div></div></div></td><td style="font-size:11px">op@zana.co.th</td><td><span class="badge b-teal">Operation</span></td><td><span class="badge b-green">Active</span></td><td style="font-size:11px;color:var(--color-text-secondary)">18 มิ.ย. 16:20</td><td><button class="btn-secondary" style="font-size:11px">แก้ไข</button></td></tr>
+      </table>
+    </div>
+  </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+const pages = {
+  login:'Login',ceo:'CEO Dashboard',admin:'Admin Dashboard',
+  import:'นำเข้าลูกค้า (Manual)',excel:'Import Excel',
+  crm:'CRM Pipeline',queue:'Today Call Queue',customer:'ข้อมูลลูกค้า',
+  calllog:'Call Log',orders:'Order Management',stock:'Stock Management',
+  products:'Product Master',ads:'Ads Performance',telesales:'Telesales Daily',
+  eval:'Daily Evaluation',cost:'ต้นทุน / Expenses',pnl:'P&L Dashboard',
+  settings:'Settings',users:'User Management'
+};
+function nav(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.getElementById('page-title').textContent=pages[p]||p;
+  const items=[...document.querySelectorAll('.sb-item')];
+  items.forEach(el=>{if(el.getAttribute('onclick')===('nav(\''+p+'\')')){el.classList.add('active')}});
+}
+function setRole(r){}
+</script>

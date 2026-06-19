@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuthStore } from '@/lib/store/authStore';
 import {
   LayoutDashboard, ShoppingCart, Package, MessageCircle,
   CheckSquare, Truck, DollarSign, Users, BarChart3, Shield,
@@ -41,6 +42,10 @@ const navSections: { title: string; items: NavItem[] }[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { profile } = useAuthStore();
+  const initials = profile?.full_name 
+    ? profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0,2) 
+    : '??';
 
   return (
     <aside className="hidden md:flex w-66 shrink-0 flex-col p-4 bg-background">
@@ -57,11 +62,11 @@ export function Sidebar() {
         {/* Brand Header */}
         <div className="flex h-16 items-center gap-3 px-5 border-b border-[var(--hud-border)]">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <span className="text-sm font-bold tracking-tight">O</span>
+            <span className="text-sm font-bold tracking-tight">Z</span>
           </div>
           <div className="leading-tight">
-            <div className="text-sm font-semibold tracking-[-0.02em]">OMS</div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-[0.05em]">Omni Channel</div>
+            <div className="text-sm font-semibold tracking-[-0.02em]">ZANA</div>
+            <div className="text-[10px] text-muted-foreground uppercase tracking-[0.05em]">managements</div>
           </div>
         </div>
 
@@ -103,13 +108,13 @@ export function Sidebar() {
         <div className="border-t border-[var(--hud-border)] p-3">
           <div className="flex items-center gap-3 rounded-xl bg-white/3 px-3 py-2 border border-white/3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">
-              PN
+              {initials}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-xs font-semibold">Patchawin</div>
+              <div className="truncate text-xs font-semibold">{profile?.full_name || '...'}</div>
               <div className="flex items-center gap-1 text-[9px] text-success/90 font-medium">
                 <span className="h-1 w-1 rounded-full bg-success" />
-                Owner
+                <span className="capitalize">{profile?.role || 'user'}</span>
               </div>
             </div>
           </div>

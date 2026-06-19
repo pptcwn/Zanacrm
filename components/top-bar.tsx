@@ -1,8 +1,53 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, Bell, Plus } from 'lucide-react';
+import { authService } from '@/lib/services/auth.service';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export function TopBar() {
+  const router = useRouter();
+  const { profile, logout } = useAuthStore();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+
+    try {
+      // Use Promise.race to prevent hanging indefinitely without throwing an Error object
+      const result = await Promise.race([
+        authService.signOut().then(() => 'success'),
+        new Promise<string>((resolve) => setTimeout(() => resolve('timeout'), 2000))
+      ]);
+
+      if (result === 'timeout') {
+        console.warn('Supabase sign out timed out. Forcing local cleanup.');
+        // Manually clear cookies if Supabase hangs so middleware doesn't bounce us back
+        document.cookie.split(";").forEach((c) => {
+          const [name] = c.split("=");
+          if (name && name.trim().startsWith('sb-')) {
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+          }
+        });
+        // Clear localStorage just in case
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith('sb-')) {
+            localStorage.removeItem(key);
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Supabase sign out error:', error);
+    } finally {
+      logout();
+      router.replace('/login');
+      router.refresh();
+      setIsSigningOut(false);
+    }
+  };
+
   return (
     <header className="px-4 pt-4 pb-2 bg-background shrink-0">
       {/* Floating HUD Glass container */}
@@ -30,12 +75,6 @@ export function TopBar() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Quick Add with minimal accent style */}
-          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary-hover text-primary-foreground text-xs font-semibold rounded-xl transition-all shadow-sm shadow-primary/10">
-            <Plus className="w-3.5 h-3.5" />
-            Quick Add
-          </button>
-
           {/* Translucent Notifications */}
           <button 
             aria-label="View notifications" 
@@ -49,9 +88,17 @@ export function TopBar() {
           {/* Profile Details */}
           <div className="flex items-center gap-2 pl-3 border-l border-[var(--hud-border)]">
             <div className="text-right text-xs leading-tight">
-              <div className="font-semibold">Patchawin</div>
-              <div className="text-[9px] text-muted-foreground uppercase tracking-wider">Owner</div>
+              <div className="font-semibold">{profile?.full_name || '...'}</div>
+              <div className="text-[9px] text-muted-foreground uppercase tracking-wider">{profile?.role || 'user'}</div>
             </div>
+            <button
+              type="button"
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+              className="rounded-xl border border-[var(--hud-border)] px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSigningOut ? 'Signing Out...' : 'Logout'}
+            </button>
           </div>
         </div>
       </div>

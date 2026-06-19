@@ -1,74 +1,119 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { Plus, Download } from 'lucide-react';
 import { PlatformBadge } from '@/components/ui/platform-badge';
 import { StatusBadge } from '@/components/ui/status-badge';
-
-const mockOrders = [
-  { id: 'TK-1001', channel: 'tiktok', customer: 'น้องมิ้น', amount: 2450, status: 'processing', date: '2026-06-19' },
-  { id: 'SP-2847', channel: 'shopee', customer: 'คุณสมชาย', amount: 1890, status: 'shipped', date: '2026-06-18' },
-  { id: 'FB-5512', channel: 'facebook', customer: 'คุณจันทร์', amount: 3200, status: 'paid', date: '2026-06-19' },
-];
+import { useOrderStore } from '@/lib/store/orderStore';
+import { AddOrderModal } from './add-order-modal';
+import { Button } from '@/components/ui/button';
 
 export default function OrdersPage() {
-  const [orders] = useState(mockOrders);
+  const { orders, isLoading, error, fetchOrders, subscribeToOrders, unsubscribeFromOrders } = useOrderStore();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  useEffect(() => {
+    fetchOrders();
+    subscribeToOrders();
+
+    return () => {
+      unsubscribeFromOrders();
+    };
+  }, [fetchOrders, subscribeToOrders, unsubscribeFromOrders]);
+
+  if (isLoading && orders.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl mb-6 text-sm">
+        Failed to load orders: {error}
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Orders</h1>
-          <p className="text-zinc-400">Manage all orders from every platform</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-white">Orders</h1>
+          <p className="text-zinc-400 mt-1 text-sm">Manage all orders from every platform</p>
         </div>
-        <button className="px-4 py-2 bg-white text-black rounded-xl text-sm font-medium">Export CSV</button>
+        <div className="flex items-center gap-3">
+          <Button variant="outline" className="text-zinc-300">
+            <Download className="w-4 h-4 mr-2" /> Export CSV
+          </Button>
+          <Button 
+            onClick={() => setIsAddModalOpen(true)}
+            className="bg-blue-600 hover:bg-blue-500 text-white"
+          >
+            <Plus className="w-4 h-4 mr-2" /> Add Order
+          </Button>
+        </div>
       </div>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-        <table className="w-full">
-          <thead className="border-b border-zinc-800 text-left text-sm text-zinc-400">
-            <tr>
-              <th className="px-6 py-4 font-medium">Order ID</th>
-              <th className="px-6 py-4 font-medium">Channel</th>
-              <th className="px-6 py-4 font-medium">Customer</th>
-              <th className="px-6 py-4 font-medium">Amount</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium">Date</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-800 text-sm">
-            {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-zinc-800/50 transition-colors">
-                <td className="px-6 py-4 font-mono text-blue-400 flex items-center gap-2">
-                  <PlatformBadge 
-                    platform={order.channel.toLowerCase() as "tiktok" | "shopee" | "facebook" | "lazada"} 
-                    showLabel={false} 
-                  />
-                  {order.id}
-                </td>
-                <td className="px-6 py-4">
-                  <PlatformBadge platform={order.channel.toLowerCase() as "tiktok" | "shopee" | "facebook" | "lazada"} />
-                </td>
-                <td className="px-6 py-4">{order.customer}</td>
-                <td className="px-6 py-4 font-medium">฿{order.amount.toLocaleString()}</td>
-                <td className="px-6 py-4">
-                  <StatusBadge status={order.status.toLowerCase() as "pending" | "processing" | "shipped" | "delivered" | "cancelled" | "paid" | "refunded"} />
-                </td>
-                <td className="px-6 py-4 text-zinc-400">{order.date}</td>
-                <td className="px-6 py-4">
-                  <Link 
-                    href={`/orders/${order.id}`} 
-                    className="text-blue-500 hover:underline text-sm"
-                  >
-                    View Detail →
-                  </Link>
-                </td>
+      <div className="bg-[#0f0f0f] border border-[#1f1f1f] rounded-2xl overflow-hidden shadow-xl">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="border-b border-[#1f1f1f] text-left text-xs uppercase tracking-wider text-zinc-500 bg-[#141414]">
+              <tr>
+                <th className="px-6 py-4 font-medium">Order ID</th>
+                <th className="px-6 py-4 font-medium">Channel</th>
+                <th className="px-6 py-4 font-medium">Amount</th>
+                <th className="px-6 py-4 font-medium">Status</th>
+                <th className="px-6 py-4 font-medium">Date</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-[#1f1f1f] text-sm">
+              {orders.map((order) => (
+                <tr key={order.id} className="hover:bg-white/5 transition-colors text-white group">
+                  <td className="px-6 py-4 font-mono text-blue-400 flex items-center gap-2 text-xs">
+                    <PlatformBadge 
+                      platform={order.channel} 
+                      showLabel={false} 
+                    />
+                    {order.order_number}
+                  </td>
+                  <td className="px-6 py-4">
+                    <PlatformBadge platform={order.channel} />
+                  </td>
+                  <td className="px-6 py-4 font-medium">฿{order.total_amount.toLocaleString()}</td>
+                  <td className="px-6 py-4">
+                    <StatusBadge status={order.status} />
+                  </td>
+                  <td className="px-6 py-4 text-zinc-400">{new Date(order.created_at).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 text-right">
+                    <Link href={`/orders/${order.id}`}>
+                      <Button variant="outline" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        View Detail
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-zinc-500">
+                    No orders found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <AddOrderModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+      />
     </div>
   );
 }

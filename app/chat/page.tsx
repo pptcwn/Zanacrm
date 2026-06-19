@@ -109,6 +109,7 @@ export default function ChatPage() {
     return matchSearch && matchPlatform && matchStatus;
   });
 
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || !activeConversationId) return;
