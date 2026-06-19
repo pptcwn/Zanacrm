@@ -104,6 +104,13 @@
   --lazada: oklch(0.55 0.18 295);
 
   --radius: 0.75rem;
+
+  /* === Premium Glass HUD Tokens === */
+  --hud-bg: oklch(0.145 0 0 / 0.65); /* Translucent near-black background */
+  --hud-blur: blur(16px);
+  --hud-border: oklch(1 0 0 / 0.08); /* Translucent hairline border */
+  --hud-border-glow: oklch(0.62 0.19 256 / 0.15); /* Primary glow border */
+  --shadow-hud: 0 8px 32px 0 oklch(0 0 0 / 0.4);
 }
 
 /* Base */
