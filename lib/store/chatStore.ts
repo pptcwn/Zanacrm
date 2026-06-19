@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { Database } from '@/types/database.types';
 import { chatService } from '@/lib/services/chat.service';
 import { tagService } from '@/lib/services/tag.service';
+import { quickReplyService } from '@/lib/services/quick-reply.service';
 
 type ConversationRow = Database['public']['Tables']['conversations']['Row'] & { customers?: any };
 type MessageRow = Database['public']['Tables']['messages']['Row'];
@@ -14,6 +15,8 @@ interface ChatState {
   error: string | null;
   subscriptionRef: any | null; // Keep track of the current subscription
   customerTags: Record<string, any[]>;
+  templates: Database['public']['Tables']['quick_reply_templates']['Row'][];
+  fetchTemplates: () => Promise<void>;
 
   setActiveConversation: (id: string | null) => void;
   fetchConversations: () => Promise<void>;
@@ -34,6 +37,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   error: null,
   subscriptionRef: null,
   customerTags: {},
+  templates: [],
 
   setActiveConversation: (id) => set({ activeConversationId: id }),
 
@@ -179,6 +183,15 @@ export const useChatStore = create<ChatState>((set, get) => ({
     if (subscriptionRef) {
       subscriptionRef.unsubscribe();
       set({ subscriptionRef: null });
+    }
+  },
+
+  fetchTemplates: async () => {
+    try {
+      const data = await quickReplyService.getAll();
+      set({ templates: data });
+    } catch (err: any) {
+      console.error(err);
     }
   },
 }));

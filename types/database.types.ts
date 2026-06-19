@@ -481,6 +481,29 @@ export interface Database {
           tag_id?: string
         }
       }
+      quick_reply_templates: {
+        Row: {
+          id: string
+          shortcut: string
+          title: string
+          content: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          shortcut: string
+          title: string
+          content: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          shortcut?: string
+          title?: string
+          content?: string
+          created_at?: string
+        }
+      }
     }
     Enums: {
       user_role: UserRole
