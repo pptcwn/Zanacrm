@@ -15,11 +15,11 @@ import {
 import { PlatformBadge } from '@/components/ui/platform-badge';
 
 const PREDEFINED_TAGS = [
-  { id: 't1', name: 'VIP', color: '#EAB308', category: 'customer' },
-  { id: 't2', name: 'Blacklist', color: '#EF4444', category: 'customer' },
-  { id: 't3', name: 'Bulk Buyer', color: '#3B82F6', category: 'customer' },
-  { id: 't4', name: 'Need Care', color: '#10B981', category: 'customer' },
-  { id: 't5', name: 'Cancel Prone', color: '#F97316', category: 'customer' },
+  { id: '6a3a4115-46aa-4a5d-b2a6-0683648eb101', name: 'VIP', color: '#EAB308', category: 'customer' },
+  { id: '6a3a4115-46aa-4a5d-b2a6-0683648eb102', name: 'Blacklist', color: '#EF4444', category: 'customer' },
+  { id: '6a3a4115-46aa-4a5d-b2a6-0683648eb103', name: 'Bulk Buyer', color: '#3B82F6', category: 'customer' },
+  { id: '6a3a4115-46aa-4a5d-b2a6-0683648eb104', name: 'Need Care', color: '#10B981', category: 'customer' },
+  { id: '6a3a4115-46aa-4a5d-b2a6-0683648eb105', name: 'Cancel Prone', color: '#F97316', category: 'customer' },
 ];
 
 export default function ChatPage() {
