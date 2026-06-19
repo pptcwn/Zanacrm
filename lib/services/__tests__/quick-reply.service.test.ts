@@ -5,7 +5,7 @@ const mockOrder = vi.fn();
 const mockSelect = vi.fn(() => ({
   order: mockOrder,
 }));
-const mockFrom = vi.fn(() => ({
+const mockFrom = vi.fn((_table?: string) => ({
   select: mockSelect,
 }));
 
