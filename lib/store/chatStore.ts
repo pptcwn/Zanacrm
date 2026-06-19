@@ -3,6 +3,7 @@ import { Database } from '@/types/database.types';
 import { chatService } from '@/lib/services/chat.service';
 import { tagService } from '@/lib/services/tag.service';
 import { quickReplyService } from '@/lib/services/quick-reply.service';
+import { createBrowserClient } from '@/lib/supabase/client';
 
 type ConversationRow = Database['public']['Tables']['conversations']['Row'] & { customers?: any };
 type MessageRow = Database['public']['Tables']['messages']['Row'];
@@ -141,15 +142,18 @@ export const useChatStore = create<ChatState>((set, get) => ({
   },
 
   subscribeToMessages: (conversationId: string) => {
-    const { createBrowserClient } = require('@/lib/supabase/client');
     const supabase = createBrowserClient();
     
     const currentSub = get().subscriptionRef;
     if (currentSub) {
-      currentSub.unsubscribe();
+      if (Array.isArray(currentSub)) {
+        currentSub.forEach((sub) => sub?.unsubscribe?.());
+      } else if (typeof currentSub.unsubscribe === 'function') {
+        currentSub.unsubscribe();
+      }
     }
 
-    const subscription = supabase
+    const messagesSub = supabase
       .channel(`messages:${conversationId}`)
       .on(
         'postgres_changes',
@@ -175,13 +179,39 @@ export const useChatStore = create<ChatState>((set, get) => ({
       )
       .subscribe();
 
-    set({ subscriptionRef: subscription });
+    const conversationsSub = supabase
+      .channel('conversations-realtime')
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'conversations' },
+        (payload: any) => {
+          set((state) => {
+            const updatedConversations = state.conversations.map((c) =>
+              c.id === payload.new.id ? { ...c, ...payload.new } : c
+            );
+            // Sort conversations by updated_at descending
+            updatedConversations.sort((a, b) => {
+              const dateA = new Date(a.updated_at || 0).getTime();
+              const dateB = new Date(b.updated_at || 0).getTime();
+              return dateB - dateA;
+            });
+            return { conversations: updatedConversations };
+          });
+        }
+      )
+      .subscribe();
+
+    set({ subscriptionRef: [messagesSub, conversationsSub] });
   },
 
   unsubscribeFromMessages: () => {
     const { subscriptionRef } = get();
     if (subscriptionRef) {
-      subscriptionRef.unsubscribe();
+      if (Array.isArray(subscriptionRef)) {
+        subscriptionRef.forEach((sub) => sub?.unsubscribe?.());
+      } else if (typeof subscriptionRef.unsubscribe === 'function') {
+        subscriptionRef.unsubscribe();
+      }
       set({ subscriptionRef: null });
     }
   },
