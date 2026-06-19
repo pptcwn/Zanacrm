@@ -36,8 +36,8 @@ export default function LoginPage() {
         router.push('/')
       }
     } catch (err) {
-      const error = err as Error
-      setErrorMsg(error.message || 'Failed to sign in')
+      const message = err instanceof Error ? err.message : 'Failed to sign in'
+      setErrorMsg(message)
     } finally {
       setLoading(false)
     }
@@ -76,7 +76,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white/3 border border-transparent px-3 py-2 text-xs rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all placeholder-muted-foreground text-foreground"
+              className="w-full bg-input border border-transparent px-3 py-2 text-xs rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all placeholder-muted-foreground text-foreground"
             />
           </div>
 
@@ -90,7 +90,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-white/3 border border-transparent px-3 py-2 text-xs rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all placeholder-muted-foreground text-foreground"
+              className="w-full bg-input border border-transparent px-3 py-2 text-xs rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all placeholder-muted-foreground text-foreground"
             />
           </div>
 
