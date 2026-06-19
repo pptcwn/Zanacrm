@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-type Variant = 'info' | 'success' | 'warning' | 'danger' | 'neutral';
+type Variant = 'info' | 'success' | 'warning' | 'danger' | 'neutral' | 'primary';
 type Size = 'sm' | 'md';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -10,11 +10,12 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClasses: Record<Variant, string> = {
-  info: 'bg-blue-500/10 text-blue-400',
-  success: 'bg-emerald-500/10 text-emerald-400',
-  warning: 'bg-amber-500/10 text-amber-400',
-  danger: 'bg-red-500/10 text-red-400',
-  neutral: 'bg-zinc-700/40 text-zinc-300',
+  info: 'bg-primary/10 text-primary ring-1 ring-inset ring-primary/20',
+  primary: 'bg-primary/10 text-primary ring-1 ring-inset ring-primary/20',
+  success: 'bg-success/10 text-success ring-1 ring-inset ring-success/20',
+  warning: 'bg-warning/10 text-warning ring-1 ring-inset ring-warning/25',
+  danger: 'bg-destructive/10 text-destructive ring-1 ring-inset ring-destructive/20',
+  neutral: 'bg-muted text-muted-foreground ring-1 ring-inset ring-border',
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -31,7 +32,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center rounded-full font-medium',
+        'inline-flex items-center justify-center gap-1 rounded-full font-medium',
         variantClasses[variant],
         sizeClasses[size],
         className,

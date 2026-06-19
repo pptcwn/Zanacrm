@@ -3,73 +3,166 @@
 @theme inline {
   --font-sans: var(--font-geist-sans), var(--font-noto-thai), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), var(--font-noto-thai), ui-monospace, monospace;
+
+  /* Surfaces */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-elevated: var(--elevated);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Muted / subtle */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
+
+  /* Borders / inputs / focus */
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand accent (indigo/blue) */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-muted: var(--primary-muted);
+
+  /* Secondary */
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Status */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+
+  /* Marketplace brand */
+  --color-tiktok: var(--tiktok);
+  --color-shopee: var(--shopee);
+  --color-facebook: var(--facebook);
+  --color-lazada: var(--lazada);
+
+  /* Radius scale */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
-  /* === Refined Design Tokens (Calm Control Center) === */
-  --color-bg: #0b0f1a;
-  --color-surface: #111827;
-  --color-surface-2: #1f2937;
-  --color-border: #374151;
-  --color-text: #f1f5f9;
-  --color-text-muted: #94a3b8;
+  /* === Refined dark control center (Vercel-inspired) === */
+  --background: oklch(0.145 0 0); /* near-black #0a0a0a */
+  --foreground: oklch(0.96 0 0); /* #ededed */
+  --card: oklch(0.178 0 0); /* #131313 */
+  --card-foreground: oklch(0.96 0 0);
+  --elevated: oklch(0.215 0 0); /* #1c1c1c */
+  --popover: oklch(0.178 0 0);
+  --popover-foreground: oklch(0.96 0 0);
 
-  /* Accent */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
+  --muted: oklch(0.215 0 0);
+  --muted-foreground: oklch(0.64 0 0); /* #a1a1a1 */
+  --subtle: oklch(0.245 0 0);
 
-  /* Marketplace subtle accents */
-  --color-tiktok: #000000;
-  --color-shopee: #ee4d2d;
-  --color-facebook: #1877f2;
+  --border: oklch(0.27 0 0); /* hairline #2a2a2a */
+  --border-strong: oklch(0.33 0 0);
+  --input: oklch(0.27 0 0);
+  --ring: oklch(0.62 0.19 256);
+
+  /* Indigo/blue accent */
+  --primary: oklch(0.62 0.19 256); /* #3b82f6-ish */
+  --primary-hover: oklch(0.56 0.2 256);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-muted: oklch(0.62 0.19 256 / 0.12);
+
+  --secondary: oklch(0.215 0 0);
+  --secondary-foreground: oklch(0.96 0 0);
+  --accent: oklch(0.245 0 0);
+  --accent-foreground: oklch(0.96 0 0);
 
   /* Status */
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
+  --success: oklch(0.7 0.16 162); /* emerald */
+  --success-foreground: oklch(0.98 0 0);
+  --warning: oklch(0.77 0.16 75); /* amber */
+  --warning-foreground: oklch(0.2 0 0);
+  --destructive: oklch(0.62 0.21 25); /* red */
+  --destructive-foreground: oklch(0.98 0 0);
+  --info: oklch(0.62 0.19 256);
 
-  /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
+  /* Marketplace brand colors */
+  --tiktok: oklch(0.7 0.16 195); /* cyan-leaning tiktok */
+  --shopee: oklch(0.66 0.2 35); /* orange */
+  --facebook: oklch(0.55 0.21 264); /* blue */
+  --lazada: oklch(0.55 0.18 295);
+
+  --radius: 0.75rem;
 }
 
 /* Base */
+* {
+  border-color: var(--border);
+}
+
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* === Refined Card & Surface === */
-.card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-}
-
-.table-container {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  overflow: hidden;
+::selection {
+  background-color: var(--primary-muted);
 }
 
 /* Typography */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-weight: 600;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
+}
+
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* === Legacy helper classes (kept in sync with tokens) === */
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.table-container {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 .text-muted {
-  color: var(--color-text-muted);
+  color: var(--muted-foreground);
 }
 
-/* Status Badges - Distinctive */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -78,75 +171,62 @@ h1, h2, h3 {
   font-size: 12px;
   font-weight: 500;
 }
+.badge-success { background-color: color-mix(in oklch, var(--success) 15%, transparent); color: var(--success); }
+.badge-warning { background-color: color-mix(in oklch, var(--warning) 18%, transparent); color: var(--warning); }
+.badge-danger  { background-color: color-mix(in oklch, var(--destructive) 15%, transparent); color: var(--destructive); }
+.badge-info    { background-color: var(--primary-muted); color: var(--primary); }
 
-.badge-success { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
-.badge-warning { background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-.badge-danger  { background-color: rgba(239, 68, 68, 0.1);  color: #ef4444; }
-.badge-info    { background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.dot-tiktok   { background-color: var(--tiktok); }
+.dot-shopee   { background-color: var(--shopee); }
+.dot-facebook { background-color: var(--facebook); }
 
-/* Marketplace subtle dots */
-.dot-tiktok   { background-color: #000000; }
-.dot-shopee   { background-color: #ee4d2d; }
-.dot-facebook { background-color: #1877f2; }
-
-/* Focus States - High Quality */
+/* Focus */
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--color-primary);
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-/* Table */
 th {
   font-weight: 500;
-  color: var(--color-text-muted);
+  color: var(--muted-foreground);
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 0.5px;
 }
 
-/* Input */
-input, select {
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  transition: border-color 0.1s ease;
+input, select, textarea {
+  background-color: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-
-input:focus, select:focus {
-  border-color: var(--color-primary);
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-muted);
 }
 
-/* Button */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 18px;
-  border-radius: 12px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 14px;
-  transition: all 0.1s ease;
+  transition: all 0.15s ease;
 }
+.btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-secondary { background-color: var(--secondary); color: var(--secondary-foreground); border: 1px solid var(--border); }
+.btn-secondary:hover { background-color: var(--elevated); border-color: var(--border-strong); }
 
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-hover);
-}
-
-.btn-secondary {
-  background-color: var(--color-surface-2);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-}
-
-.btn-secondary:hover {
-  background-color: #374151;
+/* Utility: subtle elevated panel */
+.surface {
+  background-color: var(--card);
+  border: 1px solid var(--border);
 }

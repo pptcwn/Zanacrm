@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
@@ -30,23 +30,30 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#0a0a0a",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable} h-full antialiased bg-zinc-950`}>
-      <body className="min-h-full bg-zinc-950 text-white flex flex-col">
+    <html lang="th" className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable} h-full antialiased bg-background`}>
+      <body className="min-h-full bg-background text-foreground flex flex-col">
         <div className="flex h-screen overflow-hidden">
           {/* Sidebar */}
           <Sidebar />
-          
+
           {/* Main Content */}
           <div className="flex-1 flex flex-col overflow-hidden">
             <TopBar />
-            <main className="flex-1 overflow-y-auto p-6 pb-20 md:pb-6 bg-zinc-950">
-              {children}
+            <main className="flex-1 overflow-y-auto px-4 py-6 pb-24 md:px-8 md:pb-8 bg-background">
+              <div className="mx-auto w-full max-w-[1400px]">{children}</div>
             </main>
             <MobileBottomNav />
           </div>

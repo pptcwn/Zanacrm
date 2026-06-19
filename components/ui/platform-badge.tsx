@@ -1,11 +1,12 @@
 import { cn } from '@/lib/utils';
 
-type Platform = 'tiktok' | 'shopee' | 'facebook';
+type Platform = 'tiktok' | 'shopee' | 'facebook' | 'lazada';
 
 const config: Record<Platform, { label: string; dot: string; text: string }> = {
-  tiktok: { label: 'TikTok', dot: 'bg-zinc-100', text: 'text-zinc-200' },
-  shopee: { label: 'Shopee', dot: 'bg-orange-500', text: 'text-orange-400' },
-  facebook: { label: 'Facebook', dot: 'bg-blue-500', text: 'text-blue-400' },
+  tiktok: { label: 'TikTok', dot: 'bg-[var(--tiktok)]', text: 'text-[var(--tiktok)]' },
+  shopee: { label: 'Shopee', dot: 'bg-[var(--shopee)]', text: 'text-[var(--shopee)]' },
+  facebook: { label: 'Facebook', dot: 'bg-[var(--facebook)]', text: 'text-[var(--facebook)]' },
+  lazada: { label: 'Lazada', dot: 'bg-[var(--lazada)]', text: 'text-[var(--lazada)]' },
 };
 
 export interface PlatformBadgeProps {
@@ -30,12 +31,12 @@ export function PlatformBadge({ platform, showLabel = true, className }: Platfor
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full bg-zinc-800/60 px-2.5 py-1 text-xs font-medium',
+        'inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 text-xs font-medium',
         item.text,
         className,
       )}
     >
-      <span className={cn('h-2 w-2 rounded-full', item.dot)} aria-hidden="true" />
+      <span className={cn('h-1.5 w-1.5 rounded-full', item.dot)} aria-hidden="true" />
       {item.label}
     </span>
   );
