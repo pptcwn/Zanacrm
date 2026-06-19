@@ -144,14 +144,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   subscribeToMessages: (conversationId: string) => {
     const supabase = createBrowserClient();
     
-    const currentSub = get().subscriptionRef;
-    if (currentSub) {
-      if (Array.isArray(currentSub)) {
-        currentSub.forEach((sub) => sub?.unsubscribe?.());
-      } else if (typeof currentSub.unsubscribe === 'function') {
-        currentSub.unsubscribe();
-      }
-    }
+    get().unsubscribeFromMessages();
 
     const messagesSub = supabase
       .channel(`messages:${conversationId}`)
