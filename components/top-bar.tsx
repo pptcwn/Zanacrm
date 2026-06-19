@@ -18,13 +18,13 @@ export function TopBar() {
         <div className="flex items-center gap-4 flex-1 max-w-sm">
           <div className="relative w-full">
             <label htmlFor="global-search" className="sr-only">Search orders, customers, or products</label>
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500 pointer-events-none" aria-hidden="true" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" aria-hidden="true" />
             <input
               id="global-search"
               type="text"
               placeholder="Search orders, customers, products..."
               aria-label="Search orders, customers, or products"
-              className="w-full bg-white/3 border border-transparent pl-9 pr-4 py-1.5 text-xs rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all placeholder-zinc-500"
+              className="w-full bg-white/3 border border-transparent pl-9 pr-4 py-1.5 text-xs rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all placeholder-muted-foreground text-foreground"
             />
           </div>
         </div>
@@ -39,7 +39,7 @@ export function TopBar() {
           {/* Translucent Notifications */}
           <button 
             aria-label="View notifications" 
-            className="relative p-2 hover:bg-white/5 text-zinc-400 hover:text-foreground rounded-xl transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+            className="relative p-2 hover:bg-white/5 text-muted-foreground hover:text-foreground rounded-xl transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
           >
             <Bell className="w-4 h-4" aria-hidden="true" />
             <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-destructive rounded-full" aria-hidden="true" />

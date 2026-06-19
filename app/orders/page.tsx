@@ -42,18 +42,18 @@ export default function OrdersPage() {
               <tr key={order.id} className="hover:bg-zinc-800/50 transition-colors">
                 <td className="px-6 py-4 font-mono text-blue-400 flex items-center gap-2">
                   <PlatformBadge 
-                    platform={order.channel.toLowerCase() as any} 
+                    platform={order.channel.toLowerCase() as "tiktok" | "shopee" | "facebook" | "lazada"} 
                     showLabel={false} 
                   />
                   {order.id}
                 </td>
                 <td className="px-6 py-4">
-                  <PlatformBadge platform={order.channel.toLowerCase() as any} />
+                  <PlatformBadge platform={order.channel.toLowerCase() as "tiktok" | "shopee" | "facebook" | "lazada"} />
                 </td>
                 <td className="px-6 py-4">{order.customer}</td>
                 <td className="px-6 py-4 font-medium">฿{order.amount.toLocaleString()}</td>
                 <td className="px-6 py-4">
-                  <StatusBadge status={order.status.toLowerCase() as any} />
+                  <StatusBadge status={order.status.toLowerCase() as "pending" | "processing" | "shipped" | "delivered" | "cancelled" | "paid" | "refunded"} />
                 </td>
                 <td className="px-6 py-4 text-zinc-400">{order.date}</td>
                 <td className="px-6 py-4">

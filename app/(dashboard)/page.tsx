@@ -1,7 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, Users, ShoppingCart, DollarSign } from 'lucide-react';
-import { PlatformBadge } from "@/components/ui/platform-badge";
-
 export default function DashboardPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-10">
@@ -10,7 +8,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <h1 className="text-4xl font-bold tracking-[-0.04em]">Good morning, Patchawin</h1>
         </div>
-        <p className="text-lg text-zinc-400 mt-2">Here's a clear overview of your multi-channel business today.</p>
+        <p className="text-lg text-zinc-400 mt-2">Here&apos;s a clear overview of your multi-channel business today.</p>
       </div>
 
       {/* KPI Cards - Improved breathing room and hierarchy */}

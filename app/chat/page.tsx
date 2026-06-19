@@ -48,7 +48,7 @@ export default function UnifiedChatPage() {
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-2">
-                  <PlatformBadge platform={chat.channel.toLowerCase() as any} showLabel={false} />
+                  <PlatformBadge platform={chat.channel.toLowerCase() as "tiktok" | "shopee" | "facebook" | "lazada"} showLabel={false} />
                   <div>
                     <div className="font-medium">{chat.customer}</div>
                     <div className="text-xs text-zinc-500 mt-0.5">{chat.channel}</div>

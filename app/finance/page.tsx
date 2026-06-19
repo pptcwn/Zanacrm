@@ -22,7 +22,7 @@ export default function FinancePage() {
         ].map((tab) => (
           <button
             key={tab.key}
-            onClick={() => setActiveTab(tab.key as any)}
+            onClick={() => setActiveTab(tab.key as 'overview' | 'cost' | 'ad' | 'report')}
             className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeTab === tab.key 
                 ? 'border-blue-500 text-white' 

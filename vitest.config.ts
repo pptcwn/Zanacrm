@@ -8,6 +8,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./components/__tests__/setup.ts'],
     globals: true,
+    exclude: ['**/node_modules/**', '**/dist/**', '**/antigravity-auto-accept/**'],
   },
   resolve: {
     alias: {
