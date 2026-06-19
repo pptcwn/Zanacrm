@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
-:root {
-  --font-geist-sans: var(--font-geist-sans);
-  --font-geist-mono: var(--font-geist-mono);
+@theme inline {
+  --font-sans: var(--font-geist-sans), var(--font-noto-thai), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), var(--font-noto-thai), ui-monospace, monospace;
+}
 
+:root {
   /* === Refined Design Tokens (Calm Control Center) === */
   --color-bg: #0b0f1a;
   --color-surface: #111827;
@@ -38,7 +40,7 @@
 
 /* Base */
 body {
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-sans);
   background-color: var(--color-bg);
   color: var(--color-text);
 }

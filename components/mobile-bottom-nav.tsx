@@ -11,7 +11,7 @@ const navItems = [
   { href: '/orders', label: 'Orders', icon: ShoppingCart },
   { href: '/chat', label: 'Chat', icon: MessageCircle },
   { href: '/tasks', label: 'Tasks', icon: CheckSquare },
-  { href: '/(dashboard)', label: 'Me', icon: User },
+  { href: '/', label: 'Me', icon: User },
 ];
 
 export function MobileBottomNav() {
@@ -22,7 +22,7 @@ export function MobileBottomNav() {
       <div className="flex justify-around items-center h-16">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href || pathname.startsWith(item.href);
+          const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
 
           return (
             <Link
